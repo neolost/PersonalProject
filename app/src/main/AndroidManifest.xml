@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".SignInActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
@@ -20,19 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <!--TODO (Step 2: Modify the activity tag as per requirement)-->
-        <!--START-->
-        <activity android:name=".SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- TODO (Step 2: Modify the activity tag as per requirement) -->
+        <!-- START -->
+        <activity
+            android:name=".SignUpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <!--END-->
-
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- END -->
         <activity android:name=".MainActivity" />
     </application>
 
