@@ -27,13 +27,14 @@
         <activity
             android:name=".activities.IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- TODO (Step 2: Modify the activity tag as per requirement) -->
-        <!-- START -->
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- END -->
-        <activity android:name=".activities.MainActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
