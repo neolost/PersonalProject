@@ -9,6 +9,8 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.projemanag.R
+import com.projemanag.firebase.FirestoreClass
+import com.projemanag.models.User
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : BaseActivity() {
@@ -24,13 +26,22 @@ class SignUpActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-
         setupActionBar()
-
-        // Click event for sign-up button.
         btn_sign_up.setOnClickListener {
             registerUser()
         }
+    }
+
+    fun userRegisteredSuccess(){
+        Toast.makeText(
+            this,
+            "you have successfully registered",
+            Toast.LENGTH_SHORT
+        ).show()
+        hideProgressDialog()
+
+        FirebaseAuth.getInstance().signOut()
+        finish()
     }
 
     private fun setupActionBar() {
@@ -56,19 +67,11 @@ class SignUpActivity : BaseActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
-                        hideProgressDialog()
                         if (task.isSuccessful) {
                             val firebaseUser: FirebaseUser = task.result!!.user!!
                             val registeredEmail = firebaseUser.email!!
-
-                            Toast.makeText(
-                                this@SignUpActivity,
-                                "$name you have successfully registered with email id $registeredEmail.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            FirebaseAuth.getInstance().signOut()
-                            finish()
+                            val user = User(firebaseUser.uid, name, registeredEmail)
+                            FirestoreClass().registerUser(this,user)
                         } else {
                             Toast.makeText(
                                 this@SignUpActivity,
