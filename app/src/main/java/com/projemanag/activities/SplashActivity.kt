@@ -20,7 +20,6 @@ class SplashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        // This is used to get the file from the assets folder and set it to the title textView.
         val typeface: Typeface =
             Typeface.createFromAsset(assets, "carbon bl.ttf")
         tv_app_name.typeface = typeface
