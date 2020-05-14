@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.projemanag.activities.MainActivity
+import com.projemanag.activities.MyProfileActivity
 import com.projemanag.activities.SignInActivity
 import com.projemanag.activities.SignUpActivity
 import com.projemanag.models.User
@@ -25,7 +26,7 @@ class FirestoreClass {
             }
     }
 
-    fun signInUser(activity: Activity) {
+    fun loadUserData(activity: Activity) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .get()
@@ -37,6 +38,9 @@ class FirestoreClass {
                         }
                      is MainActivity ->{
                          activity.updateNavigationUserDetails(loggedInUser)
+                     }
+                     is MyProfileActivity ->{
+                         activity.setUserDataInUI(loggedInUser)
                      }
                     }
             }.addOnFailureListener{
