@@ -19,9 +19,10 @@ import com.projemanag.R
 import com.projemanag.firebase.FirestoreClass
 import com.projemanag.models.User
 import com.projemanag.utils.Constants
+import com.projemanag.utils.Constants.PICK_IMAGE_REQUEST_CODE
+import com.projemanag.utils.Constants.READ_STORAGE_PERMISSION_CODE
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import java.io.IOException
-import java.net.UnknownServiceException
 
 class MyProfileActivity : BaseActivity() {
 
@@ -39,10 +40,8 @@ class MyProfileActivity : BaseActivity() {
         iv_profile_user_image.setOnClickListener {
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED
-            ) {
-
-                showImageChooser()
+                    == PackageManager.PERMISSION_GRANTED) {
+                Constants.showImageChooser(this)
             } else {
                 ActivityCompat.requestPermissions(
                         this,
@@ -143,11 +142,7 @@ class MyProfileActivity : BaseActivity() {
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
     }
 
-    companion object {
-        private const val READ_STORAGE_PERMISSION_CODE = 1
 
-        private const val PICK_IMAGE_REQUEST_CODE = 2
-    }
 
 
     private fun updateUserProfileData(){
