@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    companion object{
-        const val MY_PROFILE_REQUEST_CODE : Int = 11
+    companion object {
+        const val MY_PROFILE_REQUEST_CODE: Int = 11
     }
 
     private lateinit var mUserName: String
@@ -105,15 +105,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             .centerInside()
             .placeholder(R.drawable.ic_user_place_holder)
             .into(nav_user_image)
-       tv_username.text = user.name
+        tv_username.text = user.name
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK
-            && requestCode == MY_PROFILE_REQUEST_CODE){
+        if (resultCode == Activity.RESULT_OK &&
+            requestCode == MY_PROFILE_REQUEST_CODE) {
             FirestoreClass().loadUserData(this)
-        }else{
+        } else {
             Log.e("Cancelled", "Cancelled")
         }
     }

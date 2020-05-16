@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        //This call the parent constructor
+        // This call the parent constructor
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_sign_in)
@@ -24,19 +24,16 @@ class SignInActivity : BaseActivity() {
         )
         setupActionBar()
 
-
         btn_sign_in.setOnClickListener {
             signInRegisteredUser()
         }
-
     }
 
-    fun signInSuccess(user: User){
+    fun signInSuccess(user: User) {
         hideProgressDialog()
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
-
 
     private fun setupActionBar() {
 
@@ -56,7 +53,7 @@ class SignInActivity : BaseActivity() {
         val password: String = et_password_sign_in.text.toString().trim { it <= ' ' }
 
         if (validateForm(email, password)) {
-            //showProgressDialog(resources.getString(R.string.please_wait))
+            // showProgressDialog(resources.getString(R.string.please_wait))
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

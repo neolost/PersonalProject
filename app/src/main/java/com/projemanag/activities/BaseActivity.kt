@@ -30,7 +30,7 @@ open class BaseActivity : AppCompatActivity() {
 
         mProgressDialog.tv_progress_text.text = text
 
-        //Start the dialog and display it on screen.
+        // Start the dialog and display it on screen.
         mProgressDialog.show()
     }
 

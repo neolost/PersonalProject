@@ -28,7 +28,7 @@ class MyProfileActivity : BaseActivity() {
 
     private var mSelectedImageFileUri: Uri? = null
     private lateinit var mUserDetails: User
-    private var mProfileImageURL : String = ""
+    private var mProfileImageURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +52,9 @@ class MyProfileActivity : BaseActivity() {
         }
 
         btn_update.setOnClickListener {
-            if(mSelectedImageFileUri != null){
+            if (mSelectedImageFileUri != null) {
                 uploadUserImage()
-            }else{
+            } else {
                 showProgressDialog(resources.getString(R.string.please_wait))
 
                 updateUserProfileData()
@@ -64,9 +64,9 @@ class MyProfileActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK
-                && requestCode == PICK_IMAGE_REQUEST_CODE
-                && data!!.data != null
+        if (resultCode == Activity.RESULT_OK &&
+            requestCode == PICK_IMAGE_REQUEST_CODE &&
+            data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
 
@@ -84,9 +84,9 @@ class MyProfileActivity : BaseActivity() {
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == READ_STORAGE_PERMISSION_CODE) {
@@ -95,7 +95,8 @@ class MyProfileActivity : BaseActivity() {
             } else {
                 Toast.makeText(
                         this,
-                        "Oops, you just denied the permission for storage. You can also allow it from settings.",
+                        "Oops, you just denied the permission for storage. " +
+                                "You can also allow it from settings.",
                         Toast.LENGTH_LONG
                 ).show()
             }
@@ -142,22 +143,18 @@ class MyProfileActivity : BaseActivity() {
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
     }
 
-
-
-
-    private fun updateUserProfileData(){
+    private fun updateUserProfileData() {
         val userHashMap = HashMap<String, Any>()
 
-        if(mProfileImageURL.isNotEmpty() && mProfileImageURL != mUserDetails.image){
+        if (mProfileImageURL.isNotEmpty() && mProfileImageURL != mUserDetails.image) {
             userHashMap[Constants.IMAGE] = mProfileImageURL
         }
 
-        if(et_name.text.toString() != mUserDetails.name){
+        if (et_name.text.toString() != mUserDetails.name) {
             userHashMap[Constants.NAME] = et_name.text.toString()
         }
 
-
-        if(et_mobile.text.toString() != mUserDetails.mobile.toString()){
+        if (et_mobile.text.toString() != mUserDetails.mobile.toString()) {
             userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong()
         }
 
@@ -167,11 +164,11 @@ class MyProfileActivity : BaseActivity() {
     private fun uploadUserImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
-        if(mSelectedImageFileUri != null){
+        if (mSelectedImageFileUri != null) {
 
-            val sRef : StorageReference =
-                FirebaseStorage.getInstance().reference.child("USER_IMAGE "
-                        + System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri))
+            val sRef: StorageReference =
+                FirebaseStorage.getInstance().reference.child("USER_IMAGE " +
+                        System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri))
 
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {
                 taskSnapshot ->
@@ -180,13 +177,13 @@ class MyProfileActivity : BaseActivity() {
                     taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                 )
                 taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                    uri->
+                    uri ->
                     Log.i("Downloable Image URL", uri.toString())
                     mProfileImageURL = uri.toString()
 
                     updateUserProfileData()
                 }
-            }.addOnFailureListener{
+            }.addOnFailureListener {
                 exception ->
                 Toast.makeText(
                     this@MyProfileActivity,
@@ -198,13 +195,12 @@ class MyProfileActivity : BaseActivity() {
         }
     }
 
-    private fun getFileExtension(uri: Uri?):String?{
+    private fun getFileExtension(uri: Uri?): String? {
         return MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(contentResolver.getType(uri!!))
     }
 
-
-    fun profileUpdateSuccess(){
+    fun profileUpdateSuccess() {
         hideProgressDialog()
         setResult(Activity.RESULT_OK)
         finish()

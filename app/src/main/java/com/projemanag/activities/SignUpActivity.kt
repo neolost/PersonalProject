@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 class SignUpActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //This call the parent constructor
+        // This call the parent constructor
         super.onCreate(savedInstanceState)
         // This is used to align the xml view to this class
         setContentView(R.layout.activity_sign_up)
@@ -32,7 +32,7 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
-    fun userRegisteredSuccess(){
+    fun userRegisteredSuccess() {
         Toast.makeText(
             this,
             "you have successfully registered",
@@ -71,7 +71,7 @@ class SignUpActivity : BaseActivity() {
                             val firebaseUser: FirebaseUser = task.result!!.user!!
                             val registeredEmail = firebaseUser.email!!
                             val user = User(firebaseUser.uid, name, registeredEmail)
-                            FirestoreClass().registerUser(this,user)
+                            FirestoreClass().registerUser(this, user)
                         } else {
                             Toast.makeText(
                                 this@SignUpActivity,

@@ -10,7 +10,7 @@ object Constants {
 
     const val USERS: String = "users"
 
-    const val BOARDS : String = "boards"
+    const val BOARDS: String = "boards"
     const val IMAGE: String = "image"
     const val NAME: String = "name"
     const val MOBILE: String = "mobile"
@@ -25,7 +25,6 @@ object Constants {
         )
         activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
     }
-
 
     fun getFileExtension(activity: Activity, uri: Uri?): String? {
         return MimeTypeMap.getSingleton()

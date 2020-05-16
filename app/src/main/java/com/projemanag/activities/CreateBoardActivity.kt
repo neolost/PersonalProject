@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -26,21 +25,20 @@ import java.io.IOException
 
 class CreateBoardActivity : BaseActivity() {
 
-    private var mSelectedImageFileUri : Uri? = null
+    private var mSelectedImageFileUri: Uri? = null
 
     private lateinit var mUserName: String
 
-    private var mBoardImageURL : String = ""
-
+    private var mBoardImageURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_board)
         setupActionBar()
 
-        if(intent.hasExtra(Constants.NAME)){
+        if (intent.hasExtra(Constants.NAME)) {
             mUserName = intent.getStringExtra(Constants.NAME)
-        }
+            }
 
         iv_board_image.setOnClickListener {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -57,16 +55,16 @@ class CreateBoardActivity : BaseActivity() {
         }
 
         btn_create.setOnClickListener {
-            if(mSelectedImageFileUri != null){
+            if (mSelectedImageFileUri != null) {
                 uploadBoardImage()
-            }else{
+            } else {
                 showProgressDialog(resources.getString(R.string.please_wait))
                 createBoard()
             }
         }
     }
 
-    private fun createBoard(){
+    private fun createBoard() {
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(getCurrentUserID())
 
@@ -77,14 +75,15 @@ class CreateBoardActivity : BaseActivity() {
             assignedUsersArrayList
         )
 
-        FirestoreClass().createBoard(this,board)
+        FirestoreClass().createBoard(this, board)
     }
 
-    private fun uploadBoardImage(){
+    private fun uploadBoardImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
-            val sRef : StorageReference =
-                FirebaseStorage.getInstance().reference.child("BOARD_IMAGE "
-                        + System.currentTimeMillis() + "." + getFileExtension(this,mSelectedImageFileUri))
+            val sRef: StorageReference =
+                FirebaseStorage.getInstance().reference.child("BOARD_IMAGE " +
+                        System.currentTimeMillis() + "." +
+                        getFileExtension(this, mSelectedImageFileUri))
 
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {
                     taskSnapshot ->
@@ -93,13 +92,13 @@ class CreateBoardActivity : BaseActivity() {
                     taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                 )
                 taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                        uri->
+                        uri ->
                     Log.i("Downloable Image URL", uri.toString())
                     mBoardImageURL = uri.toString()
 
-                   createBoard()
+                        createBoard()
                 }
-            }.addOnFailureListener{
+            }.addOnFailureListener {
                     exception ->
                 Toast.makeText(
                     this,
@@ -110,12 +109,10 @@ class CreateBoardActivity : BaseActivity() {
             }
     }
 
-    fun boardCreatedSuccessfully(){
+    fun boardCreatedSuccessfully() {
         hideProgressDialog()
         finish()
     }
-
-
 
     private fun setupActionBar() {
         setSupportActionBar(toolbar_create_board_activity)
@@ -141,7 +138,8 @@ class CreateBoardActivity : BaseActivity() {
             } else {
                 Toast.makeText(
                     this,
-                    "Oops, you just denied the permission for storage. You can also allow it from settings.",
+                    "Oops, you just denied the permission for storage. " +
+                            "You can also allow it from settings.",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -150,9 +148,9 @@ class CreateBoardActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
-            && data!!.data != null
+        if (resultCode == Activity.RESULT_OK &&
+            requestCode == Constants.PICK_IMAGE_REQUEST_CODE &&
+            data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
 

@@ -6,11 +6,14 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.projemanag.activities.*
+import com.projemanag.activities.SignUpActivity
+import com.projemanag.activities.MainActivity
+import com.projemanag.activities.SignInActivity
+import com.projemanag.activities.MyProfileActivity
+import com.projemanag.activities.CreateBoardActivity
 import com.projemanag.models.Board
 import com.projemanag.models.User
 import com.projemanag.utils.Constants
-
 
 class FirestoreClass {
 
@@ -37,7 +40,6 @@ class FirestoreClass {
                 )
             }
     }
-
 
     fun loadUserData(activity: Activity) {
 
@@ -97,17 +99,18 @@ class FirestoreClass {
                     "Error while creating a board.",
                     e
                 )
-                Toast.makeText(activity,"Error when updating the profile!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Error when updating the profile!",
+                    Toast.LENGTH_SHORT).show()
             }
     }
 
-    fun createBoard(activity: CreateBoardActivity, board: Board){
+    fun createBoard(activity: CreateBoardActivity, board: Board) {
         mFireStore.collection(Constants.BOARDS)
             .document()
             .set(board, SetOptions.merge())
             .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName,"Board created successfully.")
-                Toast.makeText(activity,"Board created successfully.", Toast.LENGTH_SHORT).show()
+                Log.e(activity.javaClass.simpleName, "Board created successfully.")
+                Toast.makeText(activity, "Board created successfully.", Toast.LENGTH_SHORT).show()
                 activity.boardCreatedSuccessfully()
             }.addOnFailureListener {
                 exception ->

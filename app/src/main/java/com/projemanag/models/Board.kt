@@ -3,12 +3,12 @@ package com.projemanag.models
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Board (
+data class Board(
     val name: String = "",
     val image: String = "",
     val createdBy: String = "",
     val assignTo: ArrayList<String> = ArrayList()
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
