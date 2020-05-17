@@ -22,6 +22,7 @@ import com.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.text.FieldPosition
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -151,7 +152,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             rv_boards_list.setHasFixedSize(true)
 
             val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
-            rv_boards_list.adapter = adapter // Attach the adapter to the recyclerView.
+            rv_boards_list.adapter = adapter
+
+            adapter.setOnClickListener(object: BoardItemsAdapter.OnClickListener {
+                override fun onClick(position: Int, model: Board) {
+                    startActivity(Intent(this@MainActivity, TaskListActivity::class.java))
+                }
+            })
         } else {
             rv_boards_list.visibility = View.GONE
             tv_no_boards_available.visibility = View.VISIBLE
