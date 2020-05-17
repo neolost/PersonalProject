@@ -76,17 +76,29 @@ class FirestoreClass {
             }
     }
 
+    fun getBoardDetails(activity: TaskListActivity, documentId: String) {
+        mFireStore.collection(Constants.BOARDS)
+            .document(documentId)
+            .get()
+            .addOnSuccessListener { document ->
+                Log.e(activity.javaClass.simpleName, document.toString())
+                activity.boardDetails(document.toObject(Board::class.java)!!)
+            } .addOnFailureListener { e ->
+
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+            }
+    }
+
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
-        mFireStore.collection(Constants.USERS) // Collection Name
-            .document(getCurrentUserID()) // Document ID
-            .update(userHashMap) // A hashmap of fields which are to be updated.
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .update(userHashMap)
             .addOnSuccessListener {
-                // Profile data is updated successfully.
                 Log.e(activity.javaClass.simpleName, "Profile Data updated successfully!")
 
                 Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
 
-                // Notify the success result.
                 activity.profileUpdateSuccess()
             }
             .addOnFailureListener { e ->
@@ -125,7 +137,7 @@ class FirestoreClass {
 
         mFireStore.collection(Constants.BOARDS)
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
-            .get() // Will get the documents snapshots.
+            .get()
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
                 val boardsList: ArrayList<Board> = ArrayList()
