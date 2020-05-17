@@ -11,6 +11,7 @@ import com.projemanag.firebase.FirestoreClass
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -25,15 +26,14 @@ class SplashActivity : AppCompatActivity() {
         tv_app_name.typeface = typeface
 
         Handler().postDelayed({
-
-            var currentUserID = FirestoreClass().getCurrentUserID()
+            val currentUserID = FirestoreClass().getCurrentUserID()
 
             if (currentUserID.isNotEmpty()) {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             } else {
-                startActivity(Intent(this, IntroActivity::class.java))
+                startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
             }
             finish()
-        }, 2500)
+        }, 2500) // Here we pass the delay time in milliSeconds after which the splash activity will disappear.
     }
 }

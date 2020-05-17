@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.dialog_progress.*
 open class BaseActivity : AppCompatActivity() {
 
     private var doubleBackToExitPressedOnce = false
-
     private lateinit var mProgressDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +29,6 @@ open class BaseActivity : AppCompatActivity() {
 
         mProgressDialog.tv_progress_text.text = text
 
-        // Start the dialog and display it on screen.
         mProgressDialog.show()
     }
 
@@ -50,9 +48,9 @@ open class BaseActivity : AppCompatActivity() {
 
         this.doubleBackToExitPressedOnce = true
         Toast.makeText(
-            this,
-            resources.getString(R.string.please_click_back_again_to_exit),
-            Toast.LENGTH_SHORT
+                this,
+                resources.getString(R.string.please_click_back_again_to_exit),
+                Toast.LENGTH_SHORT
         ).show()
 
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
@@ -60,15 +58,14 @@ open class BaseActivity : AppCompatActivity() {
 
     fun showErrorSnackBar(message: String) {
         val snackBar =
-            Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+                Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
         val snackBarView = snackBar.view
         snackBarView.setBackgroundColor(
-            ContextCompat.getColor(
-                this@BaseActivity,
-                R.color.snackbar_error_color
-            )
+                ContextCompat.getColor(
+                        this@BaseActivity,
+                        R.color.snackbar_error_color
+                )
         )
         snackBar.show()
     }
 }
-// END

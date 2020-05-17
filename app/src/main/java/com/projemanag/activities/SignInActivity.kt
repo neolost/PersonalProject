@@ -7,32 +7,26 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.projemanag.R
-import com.projemanag.models.User
+import com.projemanag.firebase.FirestoreClass
+import com.projemanag.model.User
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        // This call the parent constructor
         super.onCreate(savedInstanceState)
-        // This is used to align the xml view to this class
         setContentView(R.layout.activity_sign_in)
 
-        // This is used to hide the status bar and make the splash screen as a full screen activity.
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+
         setupActionBar()
 
         btn_sign_in.setOnClickListener {
             signInRegisteredUser()
         }
-    }
-
-    fun signInSuccess(user: User) {
-        hideProgressDialog()
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 
     private fun setupActionBar() {
@@ -49,21 +43,16 @@ class SignInActivity : BaseActivity() {
     }
 
     private fun signInRegisteredUser() {
-        val email: String = et_email_sign_in.text.toString().trim { it <= ' ' }
-        val password: String = et_password_sign_in.text.toString().trim { it <= ' ' }
+        val email: String = et_email.text.toString().trim { it <= ' ' }
+        val password: String = et_password.text.toString().trim { it <= ' ' }
 
         if (validateForm(email, password)) {
-            // showProgressDialog(resources.getString(R.string.please_wait))
+            showProgressDialog(resources.getString(R.string.please_wait))
+
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(
-                            this@SignInActivity,
-                            "You have successfully signed in.",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        startActivity(Intent(this, MainActivity::class.java))
+                        FirestoreClass().loadUserData(this@SignInActivity)
                     } else {
                         Toast.makeText(
                             this@SignInActivity,
@@ -85,5 +74,13 @@ class SignInActivity : BaseActivity() {
         } else {
             true
         }
+    }
+
+    fun signInSuccess(user: User) {
+
+        hideProgressDialog()
+
+        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+        this.finish()
     }
 }

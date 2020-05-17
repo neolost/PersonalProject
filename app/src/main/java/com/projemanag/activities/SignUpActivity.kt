@@ -10,38 +10,25 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.projemanag.R
 import com.projemanag.firebase.FirestoreClass
-import com.projemanag.models.User
+import com.projemanag.model.User
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // This call the parent constructor
         super.onCreate(savedInstanceState)
-        // This is used to align the xml view to this class
         setContentView(R.layout.activity_sign_up)
 
-        // This is used to hide the status bar and make the splash screen as a full screen activity.
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+
         setupActionBar()
+
         btn_sign_up.setOnClickListener {
             registerUser()
         }
-    }
-
-    fun userRegisteredSuccess() {
-        Toast.makeText(
-            this,
-            "you have successfully registered",
-            Toast.LENGTH_SHORT
-        ).show()
-        hideProgressDialog()
-
-        FirebaseAuth.getInstance().signOut()
-        finish()
     }
 
     private fun setupActionBar() {
@@ -67,11 +54,16 @@ class SignUpActivity : BaseActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                     OnCompleteListener<AuthResult> { task ->
+
                         if (task.isSuccessful) {
+
                             val firebaseUser: FirebaseUser = task.result!!.user!!
                             val registeredEmail = firebaseUser.email!!
-                            val user = User(firebaseUser.uid, name, registeredEmail)
-                            FirestoreClass().registerUser(this, user)
+                            val user = User(
+                                firebaseUser.uid, name, registeredEmail
+                            )
+
+                            FirestoreClass().registerUser(this@SignUpActivity, user)
                         } else {
                             Toast.makeText(
                                 this@SignUpActivity,
@@ -101,5 +93,19 @@ class SignUpActivity : BaseActivity() {
                 true
             }
         }
+    }
+
+    fun userRegisteredSuccess() {
+
+        Toast.makeText(
+            this@SignUpActivity,
+            "You have successfully registered.",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        hideProgressDialog()
+
+        FirebaseAuth.getInstance().signOut()
+        finish()
     }
 }
