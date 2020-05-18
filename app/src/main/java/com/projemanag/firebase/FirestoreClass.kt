@@ -82,7 +82,9 @@ class FirestoreClass {
             .get()
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.toString())
-                activity.boardDetails(document.toObject(Board::class.java)!!)
+                val board = document.toObject(Board::class.java)!!
+                board.documentId = document.id
+                activity.boardDetails(board)
             } .addOnFailureListener { e ->
 
                 activity.hideProgressDialog()
@@ -141,32 +143,41 @@ class FirestoreClass {
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
                 val boardsList: ArrayList<Board> = ArrayList()
-
                 for (i in document.documents) {
-
                     val board = i.toObject(Board::class.java)!!
                     board.documentId = i.id
-
                     boardsList.add(board)
                 }
-
                 activity.populateBoardsListToUI(boardsList)
             }
             .addOnFailureListener { e ->
-
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
 
+    fun addUpdateTaskList(activity: TaskListActivity, board: Board) {
+        val taskListHashMap = HashMap<String, Any>()
+        taskListHashMap[Constants.TASK_LIST] = board.taskList
+        mFireStore.collection(Constants.BOARDS)
+            .document(board.documentId)
+            .update(taskListHashMap)
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "TaskList updated successfully. ")
+                activity.addUpdateTaskListSuccess()
+            } .addOnFailureListener {
+                exception  ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while creating a board. ", exception)
+            }
+    }
+
     fun getCurrentUserID(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
-
         var currentUserID = ""
         if (currentUser != null) {
             currentUserID = currentUser.uid
         }
-
         return currentUserID
     }
 }
