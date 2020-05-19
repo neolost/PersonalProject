@@ -11,6 +11,7 @@ import com.projemanag.model.Task
 import com.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.activity_task_list.*
+import java.text.FieldPosition
 
 class TaskListActivity : BaseActivity() {
 
@@ -66,6 +67,23 @@ class TaskListActivity : BaseActivity() {
     fun createTaskList(taskListName: String) {
         val task = Task(taskListName, FirestoreClass().getCurrentUserID())
         mBoardDetails.taskList.add(0, task)
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+    }
+
+    fun updateTaskList(position: Int, listName: String, model: Task) {
+        val task = Task(listName, model.createdBy)
+        mBoardDetails.taskList[position] = task
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().addUpdateTaskList(this, mBoardDetails)
+    }
+
+    fun deleteTaskList(position: Int) {
+        mBoardDetails.taskList.removeAt(position)
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
 
         showProgressDialog(resources.getString(R.string.please_wait))
