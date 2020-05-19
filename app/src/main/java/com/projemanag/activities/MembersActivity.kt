@@ -2,12 +2,10 @@ package com.projemanag.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telecom.Call
 import com.projemanag.R
 import com.projemanag.model.Board
 import com.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_members.*
-import kotlinx.android.synthetic.main.activity_my_profile.*
 
 class MembersActivity : AppCompatActivity() {
 
@@ -16,7 +14,7 @@ class MembersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_members)
-        if(intent.hasExtra(Constants.BOARD_DETAIL)) {
+        if (intent.hasExtra(Constants.BOARD_DETAIL)) {
             mBoardDetails = intent.getParcelableExtra<Board>(Constants.BOARD_DETAIL)
         }
         setupActionBar()

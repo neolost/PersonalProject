@@ -1,7 +1,6 @@
 package com.projemanag.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,9 +12,7 @@ import com.projemanag.model.Board
 import com.projemanag.model.Card
 import com.projemanag.model.Task
 import com.projemanag.utils.Constants
-import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.activity_task_list.*
-import java.text.FieldPosition
 
 class TaskListActivity : BaseActivity() {
 
@@ -26,7 +23,7 @@ class TaskListActivity : BaseActivity() {
         setContentView(R.layout.activity_task_list)
 
         var boardDocumentId = ""
-        if(intent.hasExtra(Constants.DOCUMENT_ID)) {
+        if (intent.hasExtra(Constants.DOCUMENT_ID)) {
             boardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)
         }
         showProgressDialog(resources.getString(R.string.please_wait))
@@ -39,7 +36,7 @@ class TaskListActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_members -> {
                 val intent = Intent(this, MembersActivity::class.java)
                 intent.putExtra(Constants.BOARD_DETAIL, mBoardDetails)

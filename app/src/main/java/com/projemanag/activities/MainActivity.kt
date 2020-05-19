@@ -22,7 +22,6 @@ import com.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import java.text.FieldPosition
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -85,11 +84,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             requestCode == MY_PROFILE_REQUEST_CODE
         ) {
             FirestoreClass().loadUserData(this@MainActivity)
-        } else if(resultCode == Activity.RESULT_OK &&
-                requestCode == CREATE_BOARD_REQUEST_CODE){
+        } else if (resultCode == Activity.RESULT_OK &&
+                requestCode == CREATE_BOARD_REQUEST_CODE) {
             FirestoreClass().getBoardsList(this)
-        }
-        else {
+        } else {
             Log.e("Cancelled", "Cancelled")
         }
     }
@@ -154,7 +152,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
             rv_boards_list.adapter = adapter
 
-            adapter.setOnClickListener(object: BoardItemsAdapter.OnClickListener {
+            adapter.setOnClickListener(object : BoardItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, model: Board) {
                     val intent = Intent(this@MainActivity, TaskListActivity::class.java)
                     intent.putExtra(Constants.DOCUMENT_ID, model.documentId)

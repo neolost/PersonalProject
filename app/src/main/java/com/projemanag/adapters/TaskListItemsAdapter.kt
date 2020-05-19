@@ -17,8 +17,8 @@ import kotlinx.android.synthetic.main.item_task.view.*
 
 open class TaskListItemsAdapter(
     private val context: Context,
-    private var list: ArrayList<Task>):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var list: ArrayList<Task>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             RecyclerView.ViewHolder {
@@ -28,7 +28,7 @@ open class TaskListItemsAdapter(
             (parent.width * 0.7).toInt(), LinearLayout.LayoutParams.WRAP_CONTENT
         )
         layoutParams.setMargins(
-            (15.toDp().toPx()),0, (40.toDp()).toPx(),0)
+            (15.toDp().toPx()), 0, (40.toDp()).toPx(), 0)
         view.layoutParams = layoutParams
         return MyViewHolder(view)
     }
@@ -37,8 +37,7 @@ open class TaskListItemsAdapter(
         return list.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder,
-                                  position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
         if (holder is MyViewHolder) {
             if (position == list.size - 1) {
@@ -62,11 +61,11 @@ open class TaskListItemsAdapter(
             holder.itemView.ib_done_list_name.setOnClickListener {
                 val listName = holder.itemView.et_task_list_name.text.toString()
                 if (listName.isNotEmpty()) {
-                   if(context is TaskListActivity) {
-                       context.createTaskList(listName)
-                   }
-                } else {
-                    Toast.makeText(context,"Please Enter List Name.",
+                    if (context is TaskListActivity) {
+                        context.createTaskList(listName)
+                    }
+                    } else {
+                    Toast.makeText(context, "Please Enter List Name.",
                         Toast.LENGTH_SHORT).show()
                 }
             }
@@ -87,11 +86,11 @@ open class TaskListItemsAdapter(
                     .text.toString()
 
                 if (listName.isNotEmpty()) {
-                    if(context is TaskListActivity) {
+                    if (context is TaskListActivity) {
                         context.updateTaskList(position, listName, model)
                     }
                 } else {
-                    Toast.makeText(context,"Please Enter List Name.",
+                    Toast.makeText(context, "Please Enter List Name.",
                     Toast.LENGTH_SHORT).show()
                 }
             }
@@ -113,11 +112,11 @@ open class TaskListItemsAdapter(
             holder.itemView.ib_done_card_name.setOnClickListener {
                 val cardName = holder.itemView.et_card_name.text.toString()
                 if (cardName.isNotEmpty()) {
-                    if(context is TaskListActivity) {
+                    if (context is TaskListActivity) {
                         context.addCardToTaskList(position, cardName)
                     }
                 } else {
-                    Toast.makeText(context,"Please Enter a Card name.",
+                    Toast.makeText(context, "Please Enter a Card name.",
                         Toast.LENGTH_SHORT).show()
                 }
             }
@@ -127,7 +126,6 @@ open class TaskListItemsAdapter(
 
             val adapter = CardListItemsAdapter(context, model.cards)
             holder.itemView.rv_card_list.adapter = adapter
-
         }
     }
 
@@ -158,5 +156,5 @@ open class TaskListItemsAdapter(
     private fun Int.toPx(): Int =
         (this * Resources.getSystem().displayMetrics.density).toInt()
 
-    class MyViewHolder(view: View): RecyclerView.ViewHolder(view)
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

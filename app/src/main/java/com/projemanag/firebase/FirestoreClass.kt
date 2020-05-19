@@ -85,7 +85,7 @@ class FirestoreClass {
                 val board = document.toObject(Board::class.java)!!
                 board.documentId = document.id
                 activity.boardDetails(board)
-            } .addOnFailureListener { e ->
+            }.addOnFailureListener { e ->
 
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
@@ -165,8 +165,8 @@ class FirestoreClass {
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "TaskList updated successfully. ")
                 activity.addUpdateTaskListSuccess()
-            } .addOnFailureListener {
-                exception  ->
+            }.addOnFailureListener {
+                exception ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board. ", exception)
             }

@@ -3,11 +3,11 @@ package com.projemanag.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Task (
+data class Task(
     var title: String = "",
     val createdBy: String = "",
     val cards: ArrayList<Card> = ArrayList()
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
