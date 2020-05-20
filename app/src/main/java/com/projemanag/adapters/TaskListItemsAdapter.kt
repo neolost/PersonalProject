@@ -136,7 +136,6 @@ open class TaskListItemsAdapter(
                     }
                 }
             )
-
         }
     }
 

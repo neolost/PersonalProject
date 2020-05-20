@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.activity_members.*
 class CardDetailsActivity : BaseActivity() {
 
     private lateinit var mBoardDetails: Board
-    private  var mTaskListPosition = -1
-    private  var mCardPosition = -1
+    private var mTaskListPosition = -1
+    private var mCardPosition = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

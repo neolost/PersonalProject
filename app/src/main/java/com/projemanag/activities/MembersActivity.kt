@@ -33,7 +33,6 @@ class MembersActivity : BaseActivity() {
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getAssignedMembersDetails(this,
             mBoardDetails.assignedTo)
-
     }
 
     fun setupMembersList(list: ArrayList<User>) {
@@ -70,7 +69,7 @@ class MembersActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.action_add_member -> {
                 dialogSearchMember()
                 return true
@@ -85,7 +84,7 @@ class MembersActivity : BaseActivity() {
         dialog.tv_add.setOnClickListener {
             val email = dialog.et_email_search_member.text.toString()
             if (email.isNotEmpty()) {
-               dialog.dismiss()
+                dialog.dismiss()
             showProgressDialog(resources.getString(R.string.please_wait))
                 FirestoreClass().getMemberDetails(this, email)
             } else {
@@ -97,13 +96,13 @@ class MembersActivity : BaseActivity() {
             }
         }
         dialog.tv_cancel.setOnClickListener {
-           dialog.dismiss()
+            dialog.dismiss()
         }
         dialog.show()
     }
 
     override fun onBackPressed() {
-        if(anyChangesMade) {
+        if (anyChangesMade) {
             setResult(Activity.RESULT_OK)
         }
         super.onBackPressed()

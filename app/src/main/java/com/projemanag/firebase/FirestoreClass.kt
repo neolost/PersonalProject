@@ -181,10 +181,8 @@ class FirestoreClass {
         return currentUserID
     }
 
-    fun getAssignedMembersDetails(
-        activity: MembersActivity, assignedTo: ArrayList<String>) {
-        mFireStore.collection(Constants.USERS)
-            .whereIn(Constants.ID, assignedTo)
+    fun getAssignedMembersDetails(activity: MembersActivity, assignedTo: ArrayList<String>) {
+        mFireStore.collection(Constants.USERS).whereIn(Constants.ID, assignedTo)
             .get()
             .addOnSuccessListener {
                 document ->
@@ -192,7 +190,7 @@ class FirestoreClass {
 
                 val usersList: ArrayList<User> = ArrayList()
 
-                for(i in document.documents) {
+                for (i in document.documents) {
                     val user = i.toObject(User::class.java)!!
                     usersList.add(user)
                 }
@@ -214,13 +212,13 @@ class FirestoreClass {
             .addOnSuccessListener {
                 document ->
                 if (document.documents.size > 0) {
-                   val user = document.documents[0].toObject(User::class.java)!!
+                    val user = document.documents[0].toObject(User::class.java)!!
                     activity.memberDetails(user)
                 } else {
                     activity.hideProgressDialog()
                     activity.showErrorSnackBar("No such member found")
                 }
-            } .addOnFailureListener { e ->
+            }.addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(
                     activity.javaClass.simpleName,
@@ -240,7 +238,7 @@ class FirestoreClass {
             .update(assignedToHashMap)
             .addOnSuccessListener {
                 activity.memberAssignSuccess(user)
-            } .addOnFailureListener { e ->
+            }.addOnFailureListener { e ->
             activity.hideProgressDialog()
             Log.e(
                 activity.javaClass.simpleName,
