@@ -16,12 +16,10 @@ class FirestoreClass {
     private val mFireStore = FirebaseFirestore.getInstance()
 
     fun registerUser(activity: SignUpActivity, userInfo: User) {
-
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
-
                 activity.userRegisteredSuccess()
             }
             .addOnFailureListener { e ->
@@ -35,15 +33,12 @@ class FirestoreClass {
     }
 
     fun loadUserData(activity: Activity, isToReadBoardsList: Boolean = false) {
-
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .get()
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.toString())
-
                 val loggedInUser = document.toObject(User::class.java)!!
-
                 when (activity) {
                     is SignInActivity -> {
                         activity.signInSuccess(loggedInUser)
@@ -86,7 +81,6 @@ class FirestoreClass {
                 board.documentId = document.id
                 activity.boardDetails(board)
             }.addOnFailureListener { e ->
-
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
@@ -98,9 +92,7 @@ class FirestoreClass {
             .update(userHashMap)
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "Profile Data updated successfully!")
-
                 Toast.makeText(activity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
-
                 activity.profileUpdateSuccess()
             }
             .addOnFailureListener { e ->
@@ -114,15 +106,12 @@ class FirestoreClass {
     }
 
     fun createBoard(activity: CreateBoardActivity, board: Board) {
-
         mFireStore.collection(Constants.BOARDS)
             .document()
             .set(board, SetOptions.merge())
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "Board created successfully.")
-
                 Toast.makeText(activity, "Board created successfully.", Toast.LENGTH_SHORT).show()
-
                 activity.boardCreatedSuccessfully()
             }
             .addOnFailureListener { e ->
@@ -193,9 +182,7 @@ class FirestoreClass {
             .addOnSuccessListener {
                 document ->
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
-
                 val usersList: ArrayList<User> = ArrayList()
-
                 for (i in document.documents) {
                     val user = i.toObject(User::class.java)!!
                     usersList.add(user)
