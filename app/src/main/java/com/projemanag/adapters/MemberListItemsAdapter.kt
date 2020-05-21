@@ -15,6 +15,7 @@ open class MemberListItemsAdapter(
     private val context: Context,
     private var list: ArrayList<User>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -47,7 +48,9 @@ open class MemberListItemsAdapter(
             } else {
                 holder.itemView.iv_selected_member.visibility = View.GONE
             }
+
             holder.itemView.setOnClickListener {
+
                 if (onClickListener != null) {
                     if (model.selected) {
                         onClickListener!!.onClick(position, model, Constants.UN_SELECT)
@@ -67,9 +70,9 @@ open class MemberListItemsAdapter(
         this.onClickListener = onClickListener
     }
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
     interface OnClickListener {
         fun onClick(position: Int, user: User, action: String)
     }
+
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.dialog_progress.*
 open class BaseActivity : AppCompatActivity() {
 
     private var doubleBackToExitPressedOnce = false
+
     private lateinit var mProgressDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,7 @@ open class BaseActivity : AppCompatActivity() {
 
         mProgressDialog.tv_progress_text.text = text
 
+        //Start the dialog and display it on screen.
         mProgressDialog.show()
     }
 

@@ -43,6 +43,7 @@ class MyProfileActivity : BaseActivity() {
             ) {
                 Constants.showImageChooser(this@MyProfileActivity)
             } else {
+
                 ActivityCompat.requestPermissions(
                         this,
                         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -67,9 +68,9 @@ class MyProfileActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK &&
-            requestCode == Constants.PICK_IMAGE_REQUEST_CODE &&
-            data!!.data != null
+        if (resultCode == Activity.RESULT_OK
+                && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
+                && data!!.data != null
         ) {
             mSelectedImageFileUri = data.data!!
 
@@ -87,19 +88,20 @@ class MyProfileActivity : BaseActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
+            //If permission is granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Constants.showImageChooser(this@MyProfileActivity)
             } else {
+                //Displaying another toast if permission is not granted
                 Toast.makeText(
                         this,
-                        "Oops, you just denied the permission for storage. " +
-                                "You can also allow it from settings.",
+                        "Oops, you just denied the permission for storage. You can also allow it from settings.",
                         Toast.LENGTH_LONG
                 ).show()
             }
@@ -122,7 +124,6 @@ class MyProfileActivity : BaseActivity() {
 
     fun setUserDataInUI(user: User) {
 
-        // Initialize the user details variable
         mUserDetails = user
 
         Glide
@@ -146,24 +147,27 @@ class MyProfileActivity : BaseActivity() {
         if (mSelectedImageFileUri != null) {
 
             val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-                    "USER_IMAGE" + System.currentTimeMillis() + "." +
-                            Constants.getFileExtension(this@MyProfileActivity,
-                                mSelectedImageFileUri)
+                    "USER_IMAGE" + System.currentTimeMillis() + "."
+                            + Constants.getFileExtension(this@MyProfileActivity, mSelectedImageFileUri)
             )
 
             sRef.putFile(mSelectedImageFileUri!!)
                     .addOnSuccessListener { taskSnapshot ->
+                        // The image upload is success
                         Log.e(
                                 "Firebase Image URL",
                                 taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                         )
 
+                        // Get the downloadable url from the task snapshot
                         taskSnapshot.metadata!!.reference!!.downloadUrl
                                 .addOnSuccessListener { uri ->
                                     Log.e("Downloadable Image URL", uri.toString())
 
+                                    // assign the image url to the variable.
                                     mProfileImageURL = uri.toString()
 
+                                    // Call a function to update user details in the database.
                                     updateUserProfileData()
                                 }
                     }

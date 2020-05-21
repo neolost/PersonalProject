@@ -26,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
         tv_app_name.typeface = typeface
 
         Handler().postDelayed({
+
             val currentUserID = FirestoreClass().getCurrentUserID()
 
             if (currentUserID.isNotEmpty()) {
@@ -34,6 +35,6 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
             }
             finish()
-        }, 2500) // Here we pass the delay time in milliSeconds after which the splash activity will disappear.
+        }, 2500)
     }
 }

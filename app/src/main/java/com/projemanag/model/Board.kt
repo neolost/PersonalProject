@@ -18,7 +18,7 @@ data class Board(
         source.createStringArrayList()!!,
         source.readString()!!,
         source.createTypedArrayList(Task.CREATOR)!!
-    )
+        )
 
     override fun describeContents() = 0
 

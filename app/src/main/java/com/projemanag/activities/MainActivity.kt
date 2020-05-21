@@ -80,13 +80,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK &&
-            requestCode == MY_PROFILE_REQUEST_CODE
+        if (resultCode == Activity.RESULT_OK
+            && requestCode == MY_PROFILE_REQUEST_CODE
         ) {
             FirestoreClass().loadUserData(this@MainActivity)
-        } else if (resultCode == Activity.RESULT_OK &&
-                requestCode == CREATE_BOARD_REQUEST_CODE) {
-            FirestoreClass().getBoardsList(this)
+        } else if (resultCode == Activity.RESULT_OK
+            && requestCode == CREATE_BOARD_REQUEST_CODE
+        ) {
+            FirestoreClass().getBoardsList(this@MainActivity)
         } else {
             Log.e("Cancelled", "Cancelled")
         }
@@ -111,7 +112,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    fun updateNavigationUserDetails(user: User, isToReadBoardsList: Boolean) {
+    fun updateNavigationUserDetails(user: User, readBoardsList: Boolean) {
 
         hideProgressDialog()
 
@@ -131,7 +132,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val navUsername = headerView.findViewById<TextView>(R.id.tv_username)
         navUsername.text = user.name
 
-        if (isToReadBoardsList) {
+        if (readBoardsList) {
+            // Show the progress dialog.
             showProgressDialog(resources.getString(R.string.please_wait))
             FirestoreClass().getBoardsList(this@MainActivity)
         }
@@ -150,9 +152,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             rv_boards_list.setHasFixedSize(true)
 
             val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
-            rv_boards_list.adapter = adapter
+            rv_boards_list.adapter = adapter // Attach the adapter to the recyclerView.
 
-            adapter.setOnClickListener(object : BoardItemsAdapter.OnClickListener {
+            adapter.setOnClickListener(object :
+                BoardItemsAdapter.OnClickListener {
                 override fun onClick(position: Int, model: Board) {
                     val intent = Intent(this@MainActivity, TaskListActivity::class.java)
                     intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
@@ -167,6 +170,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     companion object {
         const val MY_PROFILE_REQUEST_CODE: Int = 11
+
         const val CREATE_BOARD_REQUEST_CODE: Int = 12
     }
 }

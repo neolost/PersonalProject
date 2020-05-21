@@ -59,6 +59,7 @@ class SignUpActivity : BaseActivity() {
 
                             val firebaseUser: FirebaseUser = task.result!!.user!!
                             val registeredEmail = firebaseUser.email!!
+
                             val user = User(
                                 firebaseUser.uid, name, registeredEmail
                             )
