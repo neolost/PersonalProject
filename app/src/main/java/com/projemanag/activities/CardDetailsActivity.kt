@@ -31,11 +31,13 @@ class CardDetailsActivity : BaseActivity() {
         setContentView(R.layout.activity_card_details)
         getIntentData()
         setupActionBar()
-        et_name_card_details.setText(mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name)
+        et_name_card_details.setText(mBoardDetails
+            .taskList[mTaskListPosition].cards[mCardPosition].name)
         et_name_card_details.setSelection(et_name_card_details.text.toString().length)
 
-        mSelectedColor = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].labelColor
-        if(mSelectedColor.isNotEmpty()) {
+        mSelectedColor = mBoardDetails
+            .taskList[mTaskListPosition].cards[mCardPosition].labelColor
+        if (mSelectedColor.isNotEmpty()) {
             setColor()
         }
 
@@ -43,7 +45,8 @@ class CardDetailsActivity : BaseActivity() {
             if (et_name_card_details.text.toString().isNotEmpty()) {
                 updateCardDetails()
             } else {
-                Toast.makeText(this@CardDetailsActivity, "Enter card name.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CardDetailsActivity,
+                    "Enter card name.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -65,7 +68,8 @@ class CardDetailsActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete_card -> {
-                alertDialogForDeleteCard(mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name)
+                alertDialogForDeleteCard(mBoardDetails
+                    .taskList[mTaskListPosition].cards[mCardPosition].name)
                 return true
             }
         }
@@ -143,22 +147,24 @@ class CardDetailsActivity : BaseActivity() {
                 mMembersDetailList[i].selected = false
             }
         }
-        val listDialog = object: MembersListDialog(
+        val listDialog = object : MembersListDialog(
             this,
             mMembersDetailList,
             resources.getString(R.string.str_select_member)
-        ){
+        ) {
             override fun onItemSelected(user: User, action: String) {
                 if (action == Constants.SELECT) {
-                    if(!mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.contains(user.id)) {
-                        mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.add(user.id)
+                    if (!mBoardDetails.taskList[mTaskListPosition]
+                            .cards[mCardPosition].assignedTo.contains(user.id)) {
+                        mBoardDetails.taskList[mTaskListPosition]
+                            .cards[mCardPosition].assignedTo.add(user.id)
                     }
-                }
-                else {
-                    mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.remove(user.id)
+                } else {
+                    mBoardDetails.taskList[mTaskListPosition]
+                        .cards[mCardPosition].assignedTo.remove(user.id)
 
-                    for(i in mMembersDetailList.indices) {
-                        if(mMembersDetailList[i].id == user.id) {
+                    for (i in mMembersDetailList.indices) {
+                        if (mMembersDetailList[i].id == user.id) {
                             mMembersDetailList[i].selected = false
                         }
                     }
@@ -214,11 +220,11 @@ class CardDetailsActivity : BaseActivity() {
     private fun labelColorsListDialog() {
         val colorsList: ArrayList<String> = colorsList()
 
-        val listDialog = object: LabelColorListDialog(
+        val listDialog = object : LabelColorListDialog(
             this,
-             colorsList,
+            colorsList,
             resources.getString(R.string.str_select_label_color),
-            mSelectedColor){
+            mSelectedColor) {
             override fun onItemSelected(color: String) {
                 mSelectedColor = color
                 setColor()
@@ -255,7 +261,7 @@ class CardDetailsActivity : BaseActivity() {
             }
         }
         if (selectedMembersList.size > 0) {
-            selectedMembersList.add(SelectedMembers("",""))
+            selectedMembersList.add(SelectedMembers("", ""))
             tv_select_members.visibility = View.GONE
             rv_selected_members_list.visibility = View.VISIBLE
 
@@ -265,7 +271,7 @@ class CardDetailsActivity : BaseActivity() {
             val adapter = CardMemberListItemsAdapter(this, selectedMembersList)
             rv_selected_members_list.adapter = adapter
             adapter.setOnClickListener(
-                object: CardMemberListItemsAdapter.OnClickListener{
+                object : CardMemberListItemsAdapter.OnClickListener {
                     override fun onClick() {
                         membersListDialog()
                     }

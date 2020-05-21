@@ -176,8 +176,7 @@ class FirestoreClass {
         return currentUserID
     }
 
-    fun getAssignedMembersDetails(
-        activity: Activity, assignedTo: ArrayList<String>) {
+    fun getAssignedMembersDetails(activity: Activity, assignedTo: ArrayList<String>) {
         mFireStore.collection(Constants.USERS).whereIn(Constants.ID, assignedTo)
             .get()
             .addOnSuccessListener {
@@ -188,14 +187,14 @@ class FirestoreClass {
                     val user = i.toObject(User::class.java)!!
                     usersList.add(user)
                 }
-                if(activity is MembersActivity)
+                if (activity is MembersActivity)
                 activity.setupMembersList(usersList)
-                else if(activity is TaskListActivity)
+                else if (activity is TaskListActivity)
                     activity.boardMembersDetailList(usersList)
             }.addOnFailureListener { e ->
-                if(activity is MembersActivity)
+                if (activity is MembersActivity)
                     activity.hideProgressDialog()
-                else if(activity is TaskListActivity)
+                else if (activity is TaskListActivity)
                     activity.hideProgressDialog()
                 Log.e(
                     activity.javaClass.simpleName,

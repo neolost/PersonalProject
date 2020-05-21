@@ -69,7 +69,7 @@ open class MemberListItemsAdapter(
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    interface OnClickListener{
+    interface OnClickListener {
         fun onClick(position: Int, user: User, action: String)
     }
 }

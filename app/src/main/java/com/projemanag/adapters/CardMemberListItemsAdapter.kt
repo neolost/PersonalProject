@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.projemanag.R
-import com.projemanag.model.Board
 import com.projemanag.model.SelectedMembers
 import kotlinx.android.synthetic.main.item_card_selected_member.view.*
 
