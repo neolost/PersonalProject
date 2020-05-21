@@ -176,7 +176,8 @@ class FirestoreClass {
         return currentUserID
     }
 
-    fun getAssignedMembersDetails(activity: MembersActivity, assignedTo: ArrayList<String>) {
+    fun getAssignedMembersDetails(
+        activity: Activity, assignedTo: ArrayList<String>) {
         mFireStore.collection(Constants.USERS).whereIn(Constants.ID, assignedTo)
             .get()
             .addOnSuccessListener {
@@ -187,9 +188,15 @@ class FirestoreClass {
                     val user = i.toObject(User::class.java)!!
                     usersList.add(user)
                 }
+                if(activity is MembersActivity)
                 activity.setupMembersList(usersList)
+                else if(activity is TaskListActivity)
+                    activity.boardMembersDetailList(usersList)
             }.addOnFailureListener { e ->
-                activity.hideProgressDialog()
+                if(activity is MembersActivity)
+                    activity.hideProgressDialog()
+                else if(activity is TaskListActivity)
+                    activity.hideProgressDialog()
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while creating a boatd.",

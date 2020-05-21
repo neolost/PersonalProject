@@ -11,8 +11,6 @@ import com.projemanag.adapters.MemberListItemsAdapter
 import com.projemanag.model.User
 import kotlinx.android.synthetic.main.dialog_list.view.*
 
-// TODO (Step 4: Create a members list dialog class to show the list of members in a dialog.)
-// START
 abstract class MembersListDialog(
     context: Context,
     private var list: ArrayList<User>,
@@ -53,4 +51,3 @@ abstract class MembersListDialog(
 
     protected abstract fun onItemSelected(user: User, action:String)
 }
-// END
