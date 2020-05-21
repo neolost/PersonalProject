@@ -62,13 +62,11 @@ class MembersActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // Inflate the menu to use in the action bar
         menuInflater.inflate(R.menu.menu_add_member, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle presses on the action bar menu items
         when (item.itemId) {
             R.id.action_add_member -> {
 
@@ -92,13 +90,8 @@ class MembersActivity : BaseActivity() {
         rv_members_list.adapter = adapter
     }
 
-    /**
-     * Method is used to show the Custom Dialog.
-     */
     private fun dialogSearchMember() {
         val dialog = Dialog(this)
-        /*Set the screen content from a layout resource.
-    The resource will be inflated, adding all top-level views to the screen.*/
         dialog.setContentView(R.layout.dialog_search_member)
         dialog.tv_add.setOnClickListener(View.OnClickListener {
 
@@ -107,22 +100,15 @@ class MembersActivity : BaseActivity() {
             if (email.isNotEmpty()) {
                 dialog.dismiss()
 
-                // Show the progress dialog.
                 showProgressDialog(resources.getString(R.string.please_wait))
                 FirestoreClass().getMemberDetails(this@MembersActivity, email)
             } else {
                 showErrorSnackBar("Please enter members email address.")
-                /*Toast.makeText(
-                    this@MembersActivity,
-                    "Please enter members email address.",
-                    Toast.LENGTH_SHORT
-                ).show()*/
             }
         })
         dialog.tv_cancel.setOnClickListener(View.OnClickListener {
             dialog.dismiss()
         })
-        //Start the dialog and display it on screen.
         dialog.show()
     }
 

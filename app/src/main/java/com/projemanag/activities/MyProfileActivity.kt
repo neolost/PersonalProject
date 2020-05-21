@@ -77,10 +77,10 @@ class MyProfileActivity : BaseActivity() {
             try {
                 Glide
                         .with(this@MyProfileActivity)
-                        .load(Uri.parse(mSelectedImageFileUri.toString())) // URI of the image
-                        .centerCrop() // Scale type of the image.
-                        .placeholder(R.drawable.ic_user_place_holder) // A default place holder
-                        .into(iv_profile_user_image) // the view in which the image will be loaded.
+                        .load(Uri.parse(mSelectedImageFileUri.toString()))
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_user_place_holder)
+                        .into(iv_profile_user_image)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
@@ -94,11 +94,9 @@ class MyProfileActivity : BaseActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-            //If permission is granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Constants.showImageChooser(this@MyProfileActivity)
             } else {
-                //Displaying another toast if permission is not granted
                 Toast.makeText(
                         this,
                         "Oops, you just denied the permission for storage. You can also allow it from settings.",
@@ -159,15 +157,12 @@ class MyProfileActivity : BaseActivity() {
                                 taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                         )
 
-                        // Get the downloadable url from the task snapshot
                         taskSnapshot.metadata!!.reference!!.downloadUrl
                                 .addOnSuccessListener { uri ->
                                     Log.e("Downloadable Image URL", uri.toString())
 
-                                    // assign the image url to the variable.
                                     mProfileImageURL = uri.toString()
 
-                                    // Call a function to update user details in the database.
                                     updateUserProfileData()
                                 }
                     }

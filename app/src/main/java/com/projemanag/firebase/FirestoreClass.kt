@@ -77,9 +77,9 @@ class FirestoreClass {
     }
 
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
-        mFireStore.collection(Constants.USERS) // Collection Name
-                .document(getCurrentUserID()) // Document ID
-                .update(userHashMap) // A hashmap of fields which are to be updated.
+        mFireStore.collection(Constants.USERS)
+                .document(getCurrentUserID())
+                .update(userHashMap)
                 .addOnSuccessListener {
                     Log.e(activity.javaClass.simpleName, "Profile Data updated successfully!")
 
@@ -123,7 +123,7 @@ class FirestoreClass {
 
         mFireStore.collection(Constants.BOARDS)
                 .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
-                .get() // Will get the documents snapshots.
+                .get()
                 .addOnSuccessListener { document ->
                     Log.e(activity.javaClass.simpleName, document.documents.toString())
                     val boardsList: ArrayList<Board> = ArrayList()
