@@ -15,13 +15,18 @@ import com.projemanag.adapters.CardMemberListItemsAdapter
 import com.projemanag.dialogs.LabelColorListDialog
 import com.projemanag.dialogs.MembersListDialog
 import com.projemanag.firebase.FirestoreClass
-import com.projemanag.model.*
+import com.projemanag.model.Board
+import com.projemanag.model.User
+import com.projemanag.model.Card
+import com.projemanag.model.Task
+import com.projemanag.model.SelectedMembers
 import com.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_card_details.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
+import java.util.Calendar
+import java.util.Date
 import kotlin.collections.ArrayList
-
 
 class CardDetailsActivity : BaseActivity() {
 
@@ -30,7 +35,6 @@ class CardDetailsActivity : BaseActivity() {
     private var mCardPosition: Int = -1
     private var mSelectedColor: String = ""
     private lateinit var mMembersDetailList: ArrayList<User>
-
     private var mSelectedDueDateMilliSeconds: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +45,11 @@ class CardDetailsActivity : BaseActivity() {
 
         setupActionBar()
 
-        et_name_card_details.setText(mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name)
-        et_name_card_details.setSelection(et_name_card_details.text.toString().length) // The cursor after the string length
+        et_name_card_details.setText(mBoardDetails
+            .taskList[mTaskListPosition]
+            .cards[mCardPosition].name)
+        et_name_card_details.setSelection(et_name_card_details.text.toString()
+            .length)
 
         mSelectedColor = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].labelColor
         if (mSelectedColor.isNotEmpty()) {
@@ -90,7 +97,8 @@ class CardDetailsActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete_card -> {
-                alertDialogForDeleteCard(mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].name)
+                alertDialogForDeleteCard(mBoardDetails
+                    .taskList[mTaskListPosition].cards[mCardPosition].name)
                 return true
             }
         }
@@ -256,16 +264,19 @@ class CardDetailsActivity : BaseActivity() {
             override fun onItemSelected(user: User, action: String) {
 
                 if (action == Constants.SELECT) {
-                    if (!mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.contains(
+                    if (!mBoardDetails.taskList[mTaskListPosition]
+                            .cards[mCardPosition].assignedTo.contains(
                             user.id
                         )
                     ) {
-                        mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.add(
+                        mBoardDetails.taskList[mTaskListPosition]
+                            .cards[mCardPosition].assignedTo.add(
                             user.id
                         )
                     }
                 } else {
-                    mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.remove(
+                    mBoardDetails.taskList[mTaskListPosition]
+                        .cards[mCardPosition].assignedTo.remove(
                         user.id
                     )
 
@@ -326,7 +337,6 @@ class CardDetailsActivity : BaseActivity() {
     }
 
     private fun showDataPicker() {
-
         val c = Calendar.getInstance()
         val year =
             c.get(Calendar.YEAR)

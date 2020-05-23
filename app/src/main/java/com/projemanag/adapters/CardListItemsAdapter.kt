@@ -38,13 +38,13 @@ open class CardListItemsAdapter(
 
             if (model.labelColor.isNotEmpty()) {
                 holder.itemView.view_label_color.visibility = View.VISIBLE
-                holder.itemView.view_label_color.setBackgroundColor(Color.parseColor(model.labelColor))
+                holder.itemView.view_label_color.setBackgroundColor(Color
+                    .parseColor(model.labelColor))
             } else {
                 holder.itemView.view_label_color.visibility = View.GONE
             }
 
             holder.itemView.tv_card_name.text = model.name
-
 
             if ((context as TaskListActivity).mAssignedMembersDetailList.size > 0) {
                 val selectedMembersList: ArrayList<SelectedMembers> = ArrayList()
@@ -63,15 +63,16 @@ open class CardListItemsAdapter(
                 }
 
                 if (selectedMembersList.size > 0) {
-
-                    if (selectedMembersList.size == 1 && selectedMembersList[0].id == model.createdBy) {
+                    if (selectedMembersList.size == 1 && selectedMembersList[0]
+                            .id == model.createdBy) {
                         holder.itemView.rv_card_selected_members_list.visibility = View.GONE
                     } else {
                         holder.itemView.rv_card_selected_members_list.visibility = View.VISIBLE
 
                         holder.itemView.rv_card_selected_members_list.layoutManager =
                             GridLayoutManager(context, 4)
-                        val adapter = CardMemberListItemsAdapter(context, selectedMembersList, false)
+                        val adapter = CardMemberListItemsAdapter(context,
+                            selectedMembersList, false)
                         holder.itemView.rv_card_selected_members_list.adapter = adapter
                         adapter.setOnClickListener(object :
                             CardMemberListItemsAdapter.OnClickListener {

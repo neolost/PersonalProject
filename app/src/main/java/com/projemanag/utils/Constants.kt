@@ -7,6 +7,7 @@ import android.provider.MediaStore
 import android.webkit.MimeTypeMap
 
 object Constants {
+
     const val USERS: String = "users"
     const val BOARDS: String = "boards"
     const val IMAGE: String = "image"
@@ -23,11 +24,22 @@ object Constants {
     const val BOARD_MEMBERS_LIST: String = "board_members_list"
     const val SELECT: String = "Select"
     const val UN_SELECT: String = "UnSelect"
-    const val PROJEMENAG_PREFERENCES = "ProjemanagePrefs"
-    const val FCM_TOKEN_UPDATED = "fcmTokenUpdated"
-    const val FCM_TOKEN = "fcmToken"
     const val READ_STORAGE_PERMISSION_CODE = 1
     const val PICK_IMAGE_REQUEST_CODE = 2
+    const val PROGEMANAG_PREFERENCES: String = "ProjemanagPrefs"
+    const val FCM_TOKEN: String = "fcmToken"
+    const val FCM_TOKEN_UPDATED: String = "fcmTokenUpdated"
+    const val FCM_BASE_URL: String = "https://fcm.googleapis.com/fcm/send"
+    const val FCM_AUTHORIZATION: String = "authorization"
+    const val FCM_KEY: String = "key"
+    const val FCM_SERVER_KEY: String = "AAAAOoim6kQ:APA91bHSNY1FGM5IrykXwZc" +
+            "iiZ_yajMsDFa4dHhfXWPlw5MpM3v00f6cZH" +
+            "uU2wLx01AgV7vQxmkGmK9iQP8ppGZiaymqMZ3u5An" +
+            "b40v_slfeHH6O2ANVc1-qMJTWYdpK3KHq6WamyrFs"
+    const val FCM_KEY_TITLE: String = "title"
+    const val FCM_KEY_MESSAGE: String = "message"
+    const val FCM_KEY_DATA: String = "data"
+    const val FCM_KEY_TO: String = "to"
 
     fun showImageChooser(activity: Activity) {
         val galleryIntent = Intent(
@@ -38,7 +50,6 @@ object Constants {
     }
 
     fun getFileExtension(activity: Activity, uri: Uri?): String? {
-
         return MimeTypeMap.getSingleton()
             .getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
     }

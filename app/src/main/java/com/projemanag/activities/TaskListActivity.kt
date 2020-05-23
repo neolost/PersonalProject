@@ -71,8 +71,8 @@ class TaskListActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK
-            && (requestCode == MEMBERS_REQUEST_CODE || requestCode == CARD_DETAILS_REQUEST_CODE)
+        if (resultCode == Activity.RESULT_OK &&
+            (requestCode == MEMBERS_REQUEST_CODE || requestCode == CARD_DETAILS_REQUEST_CODE)
         ) {
             showProgressDialog(resources.getString(R.string.please_wait))
             FirestoreClass().getBoardDetails(this@TaskListActivity, mBoardDocumentId)
@@ -88,6 +88,7 @@ class TaskListActivity : BaseActivity() {
         hideProgressDialog()
 
         setupActionBar()
+
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getAssignedMembersListDetails(
             this@TaskListActivity,
@@ -104,7 +105,6 @@ class TaskListActivity : BaseActivity() {
         mBoardDetails.taskList.add(0, task)
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
 
-        // Show the progress dialog.
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
     }
@@ -189,18 +189,17 @@ class TaskListActivity : BaseActivity() {
     }
 
     fun updateCardsInTaskList(taskListPosition: Int, cards: ArrayList<Card>) {
-        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size -1)
+
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
 
         mBoardDetails.taskList[taskListPosition].cards = cards
 
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
-
     }
 
     companion object {
         const val MEMBERS_REQUEST_CODE: Int = 13
-
         const val CARD_DETAILS_REQUEST_CODE: Int = 14
     }
 }

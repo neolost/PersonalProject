@@ -12,13 +12,31 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.projemanag.R
 import com.projemanag.activities.TaskListActivity
 import com.projemanag.model.Task
-import com.projemanag.model.User
-import kotlinx.android.synthetic.main.item_task.view.*
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.item_task.view.tv_add_task_list
+import kotlinx.android.synthetic.main.item_task.view.ll_task_item
+import kotlinx.android.synthetic.main.item_task.view.tv_task_list_title
+import kotlinx.android.synthetic.main.item_task.view.cv_add_task_list_name
+import kotlinx.android.synthetic.main.item_task.view.ib_close_list_name
+import kotlinx.android.synthetic.main.item_task.view.ib_done_list_name
+import kotlinx.android.synthetic.main.item_task.view.et_task_list_name
+import kotlinx.android.synthetic.main.item_task.view.ib_edit_list_name
+import kotlinx.android.synthetic.main.item_task.view.et_edit_task_list_name
+import kotlinx.android.synthetic.main.item_task.view.ll_title_view
+import kotlinx.android.synthetic.main.item_task.view.cv_edit_task_list_name
+import kotlinx.android.synthetic.main.item_task.view.ib_close_editable_view
+import kotlinx.android.synthetic.main.item_task.view.ib_done_edit_list_name
+import kotlinx.android.synthetic.main.item_task.view.ib_delete_list
+import kotlinx.android.synthetic.main.item_task.view.tv_add_card
+import kotlinx.android.synthetic.main.item_task.view.cv_add_card
+import kotlinx.android.synthetic.main.item_task.view.ib_close_card_name
+import kotlinx.android.synthetic.main.item_task.view.ib_done_card_name
+import kotlinx.android.synthetic.main.item_task.view.et_card_name
+import kotlinx.android.synthetic.main.item_task.view.rv_card_list
+import java.util.Collections
 
 open class TaskListItemsAdapter(
     private val context: Context,
@@ -83,7 +101,8 @@ open class TaskListItemsAdapter(
 
                 holder.itemView.et_edit_task_list_name.setText(model.title)
                 holder.itemView.ll_title_view.visibility = View.GONE
-                holder.itemView.cv_edit_task_list_name.visibility = View.VISIBLE
+                holder.itemView.cv_edit_task_list_name.visibility =
+                    View.VISIBLE
             }
 
             holder.itemView.ib_close_editable_view.setOnClickListener {
@@ -149,50 +168,54 @@ open class TaskListItemsAdapter(
                 }
             })
 
-            val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+            val dividerItemDecoration =
+                DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             holder.itemView.rv_card_list.addItemDecoration(dividerItemDecoration)
 
-            val helper = ItemTouchHelper(
-                object : ItemTouchHelper.SimpleCallback(
-                    ItemTouchHelper.UP or ItemTouchHelper.DOWN,0
-                ) {
-                    override fun onMove(
-                        recyclerView: RecyclerView,
-                        dragged: RecyclerView.ViewHolder,
-                        target: RecyclerView.ViewHolder
-                    ): Boolean {
-                        val draggedPosition = dragged.adapterPosition
-                        val targetPosition = target.adapterPosition
+            val helper = ItemTouchHelper(object :
+                ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
 
-                        if (mPositionDraggedFrom == -1) {
-                            mPositionDraggedFrom == draggedPosition
-                        }
-                        mPositionDraggedTo = targetPosition
-                        Collections.swap(list[position].cards,
-                            draggedPosition, targetPosition)
-                        adapter.notifyItemMoved(draggedPosition,targetPosition)
-                        return false
-                    }
-                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    }
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    dragged: ViewHolder,
+                    target: ViewHolder
+                ): Boolean {
+                    val draggedPosition = dragged.adapterPosition
+                    val targetPosition = target.adapterPosition
 
-                    override fun clearView(
-                        recyclerView: RecyclerView,
-                        viewHolder: RecyclerView.ViewHolder
-                    ) {
-                        super.clearView(recyclerView, viewHolder)
-                        if (mPositionDraggedFrom != -1 && mPositionDraggedTo != -1 &&
-                                mPositionDraggedFrom != mPositionDraggedTo) {
-                            (context as TaskListActivity).updateCardsInTaskList(
-                                position,
-                                list[position].cards
-                            )
-                        }
-                        mPositionDraggedFrom = -1
-                        mPositionDraggedTo = -1
+                    if (mPositionDraggedFrom == -1) {
+                        mPositionDraggedFrom = draggedPosition
                     }
+                    mPositionDraggedTo = targetPosition
+                    Collections.swap(list[position].cards, draggedPosition, targetPosition)
+
+                    adapter.notifyItemMoved(draggedPosition, targetPosition)
+
+                    return false
                 }
-            )
+
+                override fun onSwiped(
+                    viewHolder: ViewHolder,
+                    direction: Int
+                ) {
+                }
+
+                override fun clearView(recyclerView: RecyclerView, viewHolder: ViewHolder) {
+                    super.clearView(recyclerView, viewHolder)
+
+                    if (mPositionDraggedFrom != -1 && mPositionDraggedTo != -1 &&
+                        mPositionDraggedFrom != mPositionDraggedTo) {
+
+                        (context as TaskListActivity).updateCardsInTaskList(
+                            position,
+                            list[position].cards
+                        )
+                    }
+
+                    mPositionDraggedFrom = -1
+                    mPositionDraggedTo = -1
+                }
+            })
             helper.attachToRecyclerView(holder.itemView.rv_card_list)
         }
     }

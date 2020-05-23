@@ -14,20 +14,15 @@ import kotlinx.android.synthetic.main.dialog_progress.*
 open class BaseActivity : AppCompatActivity() {
 
     private var doubleBackToExitPressedOnce = false
-
     private lateinit var mProgressDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
     fun showProgressDialog(text: String) {
         mProgressDialog = Dialog(this)
-
         mProgressDialog.setContentView(R.layout.dialog_progress)
-
         mProgressDialog.tv_progress_text.text = text
-
         mProgressDialog.show()
     }
 
