@@ -1,0 +1,54 @@
+package com.projemanag.robots
+
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.GeneralLocation
+import androidx.test.espresso.action.GeneralSwipeAction
+import androidx.test.espresso.action.Press
+import androidx.test.espresso.action.Swipe
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
+import androidx.test.espresso.matcher.ViewMatchers.*
+import com.projemanag.utils.getText
+import org.hamcrest.Matcher
+import java.util.concurrent.atomic.AtomicReference
+
+
+open class BaseRobot {
+
+    fun tapBy(matcher: Matcher<View>): ViewInteraction = onView(matcher)
+        .perform(click())
+
+    fun isDisplayedBy(matcher: Matcher<View>): ViewInteraction =
+        onView(matcher).check(matches(isDisplayed()))
+
+    fun typeInText(text: String, matcher: Matcher<View>): ViewInteraction =
+        onView(matcher).perform(replaceText(text), closeSoftKeyboard())
+
+    fun getMatcherText(matcher: Matcher<View>): String {
+        val restTextReference: AtomicReference<String> = AtomicReference()
+        onView(matcher)
+            .perform(getText(restTextReference))
+        return restTextReference.toString()
+    }
+
+    fun tapRecyclerItemWithText(name: String, matcher: Matcher<View>) {
+        onView(matcher)
+            .perform(actionOnItem<RecyclerView.ViewHolder>
+                (hasDescendant(withText(name)), scrollTo()))
+        onView(withText(name)).perform(click())
+    }
+
+    fun swipeFromLeftToRight(matcher: Matcher<View>) {
+        onView(matcher).perform(
+            GeneralSwipeAction(
+                Swipe.FAST, GeneralLocation.CENTER_LEFT,
+                GeneralLocation.CENTER_RIGHT, Press.FINGER
+            )
+        )
+    }
+
+}

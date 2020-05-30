@@ -23,13 +23,14 @@ class FirestoreClass {
     private val mFireStore = FirebaseFirestore.getInstance()
 
     fun registerUser(activity: SignUpActivity, userInfo: User) {
-
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
 
                 activity.userRegisteredSuccess()
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 activity.hideProgressDialog()
@@ -38,11 +39,12 @@ class FirestoreClass {
                     "Error writing document",
                     e
                 )
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun loadUserData(activity: Activity, readBoardsList: Boolean = false) {
-
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .get()
@@ -50,7 +52,6 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, document.toString())
 
                 val loggedInUser = document.toObject(User::class.java)!!
-
                 when (activity) {
                     is SignInActivity -> {
                         activity.signInSuccess(loggedInUser)
@@ -62,6 +63,7 @@ class FirestoreClass {
                         activity.setUserDataInUI(loggedInUser)
                     }
                 }
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 when (activity) {
@@ -74,16 +76,19 @@ class FirestoreClass {
                     is MyProfileActivity -> {
                         activity.hideProgressDialog()
                     }
+
                 }
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while getting loggedIn user details",
                     e
                 )
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserID())
             .update(userHashMap)
@@ -98,6 +103,7 @@ class FirestoreClass {
                         activity.profileUpdateSuccess()
                     }
                 }
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 when (activity) {
@@ -108,17 +114,17 @@ class FirestoreClass {
                         activity.hideProgressDialog()
                     }
                 }
-
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while creating a board.",
                     e
                 )
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun createBoard(activity: CreateBoardActivity, board: Board) {
-
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.BOARDS)
             .document()
             .set(board, SetOptions.merge())
@@ -128,6 +134,7 @@ class FirestoreClass {
                 Toast.makeText(activity, "Board created successfully.", Toast.LENGTH_SHORT).show()
 
                 activity.boardCreatedSuccessfully()
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 activity.hideProgressDialog()
@@ -136,11 +143,12 @@ class FirestoreClass {
                     "Error while creating a board.",
                     e
                 )
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun getBoardsList(activity: MainActivity) {
-
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.BOARDS)
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
             .get()
@@ -157,15 +165,18 @@ class FirestoreClass {
                 }
 
                 activity.populateBoardsListToUI(boardsList)
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
 
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun getBoardDetails(activity: TaskListActivity, documentId: String) {
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.BOARDS)
             .document(documentId)
             .get()
@@ -176,15 +187,17 @@ class FirestoreClass {
                 board.documentId = document.id
 
                 activity.boardDetails(board)
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun addUpdateTaskList(activity: Activity, board: Board) {
-
+        Constants.countingIdlingResource.increment()
         val taskListHashMap = HashMap<String, Any>()
         taskListHashMap[Constants.TASK_LIST] = board.taskList
 
@@ -199,6 +212,7 @@ class FirestoreClass {
                 } else if (activity is CardDetailsActivity) {
                     activity.addUpdateTaskListSuccess()
                 }
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 if (activity is TaskListActivity) {
@@ -207,11 +221,12 @@ class FirestoreClass {
                     activity.hideProgressDialog()
                 }
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun getAssignedMembersListDetails(activity: Activity, assignedTo: ArrayList<String>) {
-
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.USERS) // Collection Name
             .whereIn(
                 Constants.ID,
@@ -233,6 +248,7 @@ class FirestoreClass {
                 } else if (activity is TaskListActivity) {
                     activity.boardMembersDetailList(usersList)
                 }
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 if (activity is MembersActivity) {
@@ -245,11 +261,12 @@ class FirestoreClass {
                     "Error while creating a board.",
                     e
                 )
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun getMemberDetails(activity: MembersActivity, email: String) {
-
+        Constants.countingIdlingResource.increment()
         mFireStore.collection(Constants.USERS)
             .whereEqualTo(Constants.EMAIL, email)
             .get()
@@ -263,6 +280,7 @@ class FirestoreClass {
                     activity.hideProgressDialog()
                     activity.showErrorSnackBar("No such member found.")
                 }
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 activity.hideProgressDialog()
@@ -271,11 +289,12 @@ class FirestoreClass {
                     "Error while getting user details",
                     e
                 )
+                Constants.countingIdlingResource.decrement()
             }
     }
 
     fun assignMemberToBoard(activity: MembersActivity, board: Board, user: User) {
-
+        Constants.countingIdlingResource.increment()
         val assignedToHashMap = HashMap<String, Any>()
         assignedToHashMap[Constants.ASSIGNED_TO] = board.assignedTo
 
@@ -285,10 +304,12 @@ class FirestoreClass {
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
                 activity.memberAssignSuccess(user)
+                Constants.countingIdlingResource.decrement()
             }
             .addOnFailureListener { e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+                Constants.countingIdlingResource.decrement()
             }
     }
 

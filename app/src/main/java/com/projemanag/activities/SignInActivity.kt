@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.projemanag.R
 import com.projemanag.firebase.FirestoreClass
 import com.projemanag.model.User
+import com.projemanag.utils.Constants
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : BaseActivity() {
@@ -45,20 +46,21 @@ class SignInActivity : BaseActivity() {
     private fun signInRegisteredUser() {
         val email: String = et_email.text.toString().trim { it <= ' ' }
         val password: String = et_password.text.toString().trim { it <= ' ' }
-
         if (validateForm(email, password)) {
+            Constants.countingIdlingResource.increment()
             showProgressDialog(resources.getString(R.string.please_wait))
-
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         FirestoreClass().loadUserData(this@SignInActivity)
+                        Constants.countingIdlingResource.decrement()
                     } else {
                         Toast.makeText(
                             this@SignInActivity,
                             task.exception!!.message,
                             Toast.LENGTH_LONG
                         ).show()
+                        Constants.countingIdlingResource.decrement()
                     }
                 }
         }
@@ -81,6 +83,7 @@ class SignInActivity : BaseActivity() {
         hideProgressDialog()
 
         startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+
         this.finish()
     }
 }
