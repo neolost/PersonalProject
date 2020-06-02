@@ -3,7 +3,11 @@ package com.projemanag.robots
 import android.view.View
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
+import androidx.test.espresso.matcher.ViewMatchers.Visibility
+import androidx.test.espresso.matcher.ViewMatchers.hasSibling
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.projemanag.R
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -38,7 +42,7 @@ class BoardDetailRobot : BaseRobot() {
     fun tapOnAddListButton() = tapBy(createListMatcher)
     fun typeInListNameField(text: String) = typeInText(text, listNameFieldMatcher)
     fun tapSaveListNameButton() = tapBy(saveListNameMatcher)
-    fun typeInCardNameField(text: String) = typeInText(text,cardNameFieldMatcher)
+    fun typeInCardNameField(text: String) = typeInText(text, cardNameFieldMatcher)
     fun tapOnSaveCardNameButton() = tapBy(saveCardNameMatcher)
     fun tapOnAddCardButton() = tapBy(addCardMatcher)
     fun getEmptyCardText() = getMatcherText(addCardMatcher)

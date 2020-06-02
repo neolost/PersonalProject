@@ -8,12 +8,17 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import androidx.test.rule.ActivityTestRule
 import com.projemanag.activities.IntroActivity
-import com.projemanag.robots.*
+import com.projemanag.robots.login
+import com.projemanag.robots.boards
+import com.projemanag.robots.boardDetail
+import com.projemanag.robots.cardDetail
+import com.projemanag.robots.alert
+import com.projemanag.robots.profile
+import com.projemanag.robots.profileDetail
 import com.projemanag.utils.Constants.countingIdlingResource
 import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
-
 
 class BaseTest {
 
@@ -26,7 +31,6 @@ class BaseTest {
 
         @After
         fun tearDown() { IdlingRegistry.getInstance().unregister(countingIdlingResource) }
-
 
         @Rule
         @JvmField
@@ -45,7 +49,6 @@ class BaseTest {
         private val updatedName = "Green"
         private val emptyCardText = "Add Card"
 
-
         @Test
         fun updateCardNameTest() {
             login {
@@ -63,13 +66,13 @@ class BaseTest {
                 tapOncard()
             }
 
-           cardDetail {
-               updateCardName(updatedCardName)
-               tapUpdateCardDetails()
-           }
+            cardDetail {
+                updateCardName(updatedCardName)
+                tapUpdateCardDetails()
+            }
 
             boardDetail {
-                assertEquals(getCardName(),updatedCardName)
+                assertEquals(getCardName(), updatedCardName)
             }
 
             boardDetail {
@@ -114,9 +117,8 @@ class BaseTest {
             }
 
             boardDetail {
-                assertEquals(getEmptyCardText(),emptyCardText)
+                assertEquals(getEmptyCardText(), emptyCardText)
             }
-
         }
 
         @Test
@@ -144,7 +146,7 @@ class BaseTest {
             }
 
             boardDetail {
-                assertEquals(getEmptyBoardCardName(),emptyBoardListName)
+                assertEquals(getEmptyBoardCardName(), emptyBoardListName)
             }
         }
 
@@ -166,6 +168,7 @@ class BaseTest {
             }
 
             cardDetail {
+                closeKeyboard()
                 tapOnDataPicker()
                 selectDate(date)
             }
@@ -183,7 +186,8 @@ class BaseTest {
             }
 
             cardDetail {
-                assertEquals(date,getCurrentDate())
+                closeKeyboard()
+                assertEquals(date, getCurrentDate())
             }
 
             cardDetail {
@@ -206,7 +210,7 @@ class BaseTest {
                 }
 
                 boards {
-                      swipeToolBar()
+                    swipeToolBar()
                 }
 
                 profile {
@@ -227,7 +231,7 @@ class BaseTest {
                 }
 
                 profileDetail {
-                    assertEquals(getUserName(),updatedName)
+                    assertEquals(getUserName(), updatedName)
                     editProfileName(defaultName)
                     tapUpdateProfileButton()
                 }

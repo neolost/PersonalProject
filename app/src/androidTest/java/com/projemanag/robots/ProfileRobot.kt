@@ -2,11 +2,9 @@ package com.projemanag.robots
 
 import android.view.View
 import androidx.test.espresso.matcher.ViewMatchers
-import com.projemanag.R
 import org.hamcrest.Matcher
 
 fun profile(func: ProfileRobot.() -> Unit) = ProfileRobot().apply { func() }
-
 
 class ProfileRobot : BaseRobot() {
 

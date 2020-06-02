@@ -3,9 +3,11 @@ package com.projemanag.robots
 import android.view.View
 import android.widget.DatePicker
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.PickerActions.setDate
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
+import androidx.test.espresso.matcher.ViewMatchers.Visibility
+import androidx.test.espresso.matcher.ViewMatchers.withClassName
 import com.projemanag.R
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers
@@ -15,10 +17,13 @@ fun cardDetail(func: CardDetailRobot.() -> Unit) = CardDetailRobot().apply { fun
 class CardDetailRobot : BaseRobot() {
     val cardNameMatcher: Matcher<View> = withId(R.id.et_name_card_details)
     val updateButton: Matcher<View> = withId(R.id.btn_update_card_details)
-    val datePickerMatcher: Matcher<View> = withId(R.id.tv_select_due_date)
+    val datePickerMatcher: Matcher<View> = Matchers.allOf(
+        withId(R.id.tv_select_due_date),
+        withEffectiveVisibility(Visibility.VISIBLE)
+    )
     val deleteBoardMatcher: Matcher<View> = withId(R.id.action_delete_card)
 
-    fun updateCardName(name: String) = typeInText(name,cardNameMatcher)
+    fun updateCardName(name: String) = typeInText(name, cardNameMatcher)
     fun tapUpdateCardDetails() = tapBy(updateButton)
     fun tapOnDataPicker() = tapBy(datePickerMatcher)
     fun selectDate(date: String) {
@@ -31,4 +36,5 @@ class CardDetailRobot : BaseRobot() {
 
     fun tapDeleteCardButton() = tapBy(deleteBoardMatcher)
     fun getCurrentDate() = getMatcherText(datePickerMatcher)
+    fun closeKeyboard() = closeSoftKeyboard(datePickerMatcher)
 }

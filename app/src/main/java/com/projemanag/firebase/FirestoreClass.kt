@@ -76,7 +76,6 @@ class FirestoreClass {
                     is MyProfileActivity -> {
                         activity.hideProgressDialog()
                     }
-
                 }
                 Log.e(
                     activity.javaClass.simpleName,

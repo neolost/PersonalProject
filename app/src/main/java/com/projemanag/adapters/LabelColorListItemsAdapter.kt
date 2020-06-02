@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.projemanag.R
 import kotlinx.android.synthetic.main.item_label_color.view.view_main
 import kotlinx.android.synthetic.main.item_label_color.view.iv_selected_color
-import java.util.*
 
 class LabelColorListItemsAdapter(
     private val context: Context,

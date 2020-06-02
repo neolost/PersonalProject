@@ -1,7 +1,6 @@
 import androidx.test.InstrumentationRegistry
 import org.json.JSONObject
 
-
 fun readJSONFromAsset(file: String): String? {
     var json: String? = null
     try {

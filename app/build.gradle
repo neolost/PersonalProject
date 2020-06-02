@@ -4,11 +4,19 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply from: "../ktlint.gradle"
 
-
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.shazam.fork:fork-gradle-plugin:3.10.0'
+    }
+}
+apply plugin: 'com.shazam.fork'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-
     defaultConfig {
         applicationId "com.projemanag"
         minSdkVersion 21
@@ -17,16 +25,13 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
-
 dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.1.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -54,3 +59,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
 }
+fork {
+    title = "My acceptance tests"
+    testPackage = "com.projemanag.tests"
+    totalAllowedRetryQuota = 5
+    retryPerTestCaseQuota = 2
+    poolingStrategy {
+        computed {
+            characteristic = "sw"
+            groups {
+                allDevices = 0
+            }
+        }
+    }
+}
+

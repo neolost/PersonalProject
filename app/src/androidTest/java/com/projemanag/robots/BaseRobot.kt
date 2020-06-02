@@ -8,22 +8,24 @@ import androidx.test.espresso.action.GeneralLocation
 import androidx.test.espresso.action.GeneralSwipeAction
 import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Swipe
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.projemanag.utils.getText
 import org.hamcrest.Matcher
 import java.util.concurrent.atomic.AtomicReference
-
 
 open class BaseRobot {
 
     fun tapBy(matcher: Matcher<View>): ViewInteraction = onView(matcher)
         .perform(click())
 
-    fun isDisplayedBy(matcher: Matcher<View>): ViewInteraction =
-        onView(matcher).check(matches(isDisplayed()))
+    fun closeSoftKeyboard(matcher: Matcher<View>): ViewInteraction =
+        onView(matcher).perform(closeSoftKeyboard())
 
     fun typeInText(text: String, matcher: Matcher<View>): ViewInteraction =
         onView(matcher).perform(replaceText(text), closeSoftKeyboard())
@@ -50,5 +52,4 @@ open class BaseRobot {
             )
         )
     }
-
 }
