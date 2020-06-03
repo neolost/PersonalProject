@@ -18,7 +18,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.projemanag.utils.getText
 import org.hamcrest.Matcher
 import java.util.concurrent.atomic.AtomicReference
-// Base test
+
 open class BaseRobot {
 
     fun tapBy(matcher: Matcher<View>): ViewInteraction = onView(matcher)
