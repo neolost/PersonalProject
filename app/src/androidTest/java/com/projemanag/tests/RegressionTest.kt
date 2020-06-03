@@ -20,7 +20,7 @@ import junit.framework.Assert.assertEquals
 import org.junit.After
 import org.junit.Before
 
-class BaseTest {
+class RegressionTest {
 
     @LargeTest
     @RunWith(AndroidJUnit4::class)
