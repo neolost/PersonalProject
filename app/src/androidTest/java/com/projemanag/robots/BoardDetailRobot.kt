@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.projemanag.R
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
-//
+
 fun boardDetail(func: BoardDetailRobot.() -> Unit) = BoardDetailRobot().apply { func() }
 
 class BoardDetailRobot : BaseRobot() {
