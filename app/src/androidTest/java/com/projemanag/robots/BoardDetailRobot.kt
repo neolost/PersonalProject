@@ -36,14 +36,14 @@ class BoardDetailRobot : BaseRobot() {
         onView(allOf(deleteListButtonMatcher, hasSibling(withText(text))))
             .perform(click())
     }
-    fun tapOncard() = tapBy(cardNameMatcher)
+    fun tapCard() = tapBy(cardNameMatcher)
     fun getCardName() = getMatcherText(cardNameMatcher)
     fun getEmptyBoardCardName() = getMatcherText(createListMatcher)
-    fun tapOnAddListButton() = tapBy(createListMatcher)
+    fun tapAddListButton() = tapBy(createListMatcher)
     fun typeInListNameField(text: String) = typeInText(text, listNameFieldMatcher)
     fun tapSaveListNameButton() = tapBy(saveListNameMatcher)
     fun typeInCardNameField(text: String) = typeInText(text, cardNameFieldMatcher)
-    fun tapOnSaveCardNameButton() = tapBy(saveCardNameMatcher)
-    fun tapOnAddCardButton() = tapBy(addCardMatcher)
+    fun tapSaveCardNameButton() = tapBy(saveCardNameMatcher)
+    fun tapAddCardButton() = tapBy(addCardMatcher)
     fun getEmptyCardText() = getMatcherText(addCardMatcher)
 }

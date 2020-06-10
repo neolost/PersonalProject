@@ -16,16 +16,16 @@ fun cardDetail(func: CardDetailRobot.() -> Unit) = CardDetailRobot().apply { fun
 
 class CardDetailRobot : BaseRobot() {
     val cardNameMatcher: Matcher<View> = withId(R.id.et_name_card_details)
-    val updateButton: Matcher<View> = withId(R.id.btn_update_card_details)
+    val updateButtonMatcher: Matcher<View> = withId(R.id.btn_update_card_details)
     val datePickerMatcher: Matcher<View> = Matchers.allOf(
         withId(R.id.tv_select_due_date),
         withEffectiveVisibility(Visibility.VISIBLE)
     )
     val deleteBoardMatcher: Matcher<View> = withId(R.id.action_delete_card)
 
-    fun updateCardName(name: String) = typeInText(name, cardNameMatcher)
-    fun tapUpdateCardDetails() = tapBy(updateButton)
-    fun tapOnDataPicker() = tapBy(datePickerMatcher)
+    fun typeInUpdateCardNameField(name: String) = typeInText(name, cardNameMatcher)
+    fun tapUpdateCardDetails() = tapBy(updateButtonMatcher)
+    fun tapDataPicker() = tapBy(datePickerMatcher)
     fun selectDate(date: String) {
         val newYear = date.substring(6, 10).toInt()
         val newMonth = date.substring(3, 5).toInt()

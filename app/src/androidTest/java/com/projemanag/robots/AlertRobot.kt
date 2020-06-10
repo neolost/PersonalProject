@@ -10,6 +10,6 @@ class AlertRobot : BaseRobot() {
     val yesButtonMatcher: Matcher<View> = withText("Yes")
     val okButtonMatcher: Matcher<View> = withText("OK")
 
-    fun tapOnYesButtonOnAlert() = tapBy(yesButtonMatcher)
-    fun tapOnOkButtonMatcher() = tapBy(okButtonMatcher)
+    fun tapYesAlertButton() = tapBy(yesButtonMatcher)
+    fun tapOkAlertButton() = tapBy(okButtonMatcher)
 }

@@ -63,11 +63,11 @@ class RegressionTest {
             }
 
             boardDetail {
-                tapOncard()
+                tapCard()
             }
 
             cardDetail {
-                updateCardName(updatedCardName)
+                typeInUpdateCardNameField(updatedCardName)
                 tapUpdateCardDetails()
             }
 
@@ -76,11 +76,11 @@ class RegressionTest {
             }
 
             boardDetail {
-                tapOncard()
+                tapCard()
             }
 
             cardDetail {
-                updateCardName(defaultCardName)
+                typeInUpdateCardNameField(defaultCardName)
                 tapUpdateCardDetails()
             }
         }
@@ -99,13 +99,13 @@ class RegressionTest {
             }
 
             boardDetail {
-                tapOnAddCardButton()
+                tapAddCardButton()
             }
 
             boardDetail {
                 typeInCardNameField(defaultCardName)
-                tapOnSaveCardNameButton()
-                tapOncard()
+                tapSaveCardNameButton()
+                tapCard()
             }
 
             cardDetail {
@@ -113,7 +113,7 @@ class RegressionTest {
             }
 
             alert {
-                tapOnYesButtonOnAlert()
+                tapYesAlertButton()
             }
 
             boardDetail {
@@ -135,14 +135,14 @@ class RegressionTest {
             }
 
             boardDetail {
-                tapOnAddListButton()
+                tapAddListButton()
                 typeInListNameField(listName)
                 tapSaveListNameButton()
                 tapDeleteListButton(listName)
             }
 
             alert {
-                tapOnYesButtonOnAlert()
+                tapYesAlertButton()
             }
 
             boardDetail {
@@ -164,17 +164,17 @@ class RegressionTest {
             }
 
             boardDetail {
-                tapOncard()
+                tapCard()
             }
 
             cardDetail {
                 closeKeyboard()
-                tapOnDataPicker()
+                tapDataPicker()
                 selectDate(date)
             }
 
             alert {
-                tapOnOkButtonMatcher()
+                tapOkAlertButton()
             }
 
             cardDetail {
@@ -182,7 +182,7 @@ class RegressionTest {
             }
 
             boardDetail {
-                tapOncard()
+                tapCard()
             }
 
             cardDetail {
@@ -191,11 +191,11 @@ class RegressionTest {
             }
 
             cardDetail {
-                tapOnDataPicker()
+                tapDataPicker()
             }
 
             alert {
-                tapOnOkButtonMatcher()
+                tapOkAlertButton()
             }
         }
 
@@ -214,7 +214,7 @@ class RegressionTest {
                 }
 
                 profile {
-                    tapOnMyProfile()
+                    tapMyProfileButton()
                 }
 
                 profileDetail {
@@ -227,7 +227,7 @@ class RegressionTest {
                 }
 
                 profile {
-                    tapOnMyProfile()
+                    tapMyProfileButton()
                 }
 
                 profileDetail {
