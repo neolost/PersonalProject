@@ -44,7 +44,6 @@ class RegressionTest {
         private val emptyBoardListName = "Add List"
         private val listName = "List"
         private val date = "12/05/1993"
-        private val boardName = "Board"
         private val defaultName = "Shrek"
         private val updatedName = "Green"
         private val emptyCardText = "Add Card"
