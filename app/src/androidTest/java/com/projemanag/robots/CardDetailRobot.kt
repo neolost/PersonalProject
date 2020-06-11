@@ -35,6 +35,6 @@ class CardDetailRobot : BaseRobot() {
     }
 
     fun tapDeleteCardButton() = tapBy(deleteBoardMatcher)
-    fun getCurrentDate() = getMatcherText(datePickerMatcher)
+    fun getDate() = getMatcherText(datePickerMatcher)
     fun closeKeyboard() = closeSoftKeyboard(datePickerMatcher)
 }

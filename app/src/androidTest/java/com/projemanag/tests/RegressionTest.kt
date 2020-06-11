@@ -62,6 +62,7 @@ class RegressionTest {
             }
 
             boardDetail {
+                assertEquals(getCardName(), defaultCardName)
                 tapCard()
             }
 
@@ -186,7 +187,7 @@ class RegressionTest {
 
             cardDetail {
                 closeKeyboard()
-                assertEquals(date, getCurrentDate())
+                assertEquals(date, getDate())
             }
 
             cardDetail {
