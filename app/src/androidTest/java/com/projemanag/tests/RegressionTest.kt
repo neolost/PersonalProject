@@ -48,7 +48,6 @@ class RegressionTest {
         private val updatedName = "Green"
         private val emptyCardText = "Add Card"
 
-        // adding comment
         @Test
         fun updateCardNameTest() {
             login {
